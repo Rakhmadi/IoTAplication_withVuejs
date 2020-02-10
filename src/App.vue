@@ -56,20 +56,20 @@
         <v-list-item-icon>
         <v-icon>mdi-water</v-icon>
       </v-list-item-icon>
-      <v-list-item-subtitle>Humidity   <h3>{{dats.kelembapan}}</h3> </v-list-item-subtitle>
+      <v-list-item-subtitle>Humidity   <h3>{{kelembapan}}</h3> </v-list-item-subtitle>
     </v-list-item>
 
     <v-list-item>
       <v-list-item-icon>
         <v-icon>mdi-thermometer</v-icon>
       </v-list-item-icon>
-      <v-list-item-subtitle>Temprature <h3>{{dats.temperatur}}</h3></v-list-item-subtitle>
+      <v-list-item-subtitle>Temprature <h3>{{temperatur}}</h3></v-list-item-subtitle>
     </v-list-item>
      <v-list-item>
       <v-list-item-icon>
         <v-icon>mdi-wifi</v-icon>
       </v-list-item-icon>
-      <v-list-item-subtitle>RSSI <h3>{{dats.signalstr}} dbm</h3></v-list-item-subtitle>
+      <v-list-item-subtitle>RSSI <h3>{{signalstr}} dbm</h3></v-list-item-subtitle>
     </v-list-item>
       </v-list-item-content>
 
@@ -93,7 +93,7 @@ background: rgba(58,28,113,1) ;
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">Relay</v-list-item-title>
-        <v-list-item-subtitle>Status Relay Condition <h2>{{g.condition}}</h2> </v-list-item-subtitle>
+        <v-list-item-subtitle>Status Relay Condition <h2>{{condition}}</h2> </v-list-item-subtitle>
       </v-list-item-content>
 
 
@@ -131,9 +131,15 @@ import axios from 'axios';
   
     data(){
       return{
-        dats:null,
+        dats:{
+         
+        },
          drawer: null,
          g:'off',
+         kelembapan:'0',
+          temperatur:'0',
+          signalstr:null,
+          condition:''
 
       }
     },
@@ -142,6 +148,9 @@ import axios from 'axios';
       const yu =this;
     axios.get("http://192.168.43.100/dht").then(function(resp){
       yu.dats=resp.data;
+      yu.kelembapan=resp.data.kelembapan
+      yu.temperatur=resp.data.temperatur
+      yu.signalstr=resp.data.signalstr
 
     }).catch(function(err){
       yu.dats=err.response;
@@ -153,15 +162,18 @@ import axios from 'axios';
          const yu =this;
       axios.get("http://192.168.43.100/relay",{ params: { condition:"on" }}).then(function(resp){
       yu.g=resp.data;
+      yu.condition=resp.data.condition
 
     }).catch(function(err){
       yu.g=err.response;
+      
     })
     },
     off(){
          const yu =this;
       axios.get("http://192.168.43.100/relay",{ params: { condition:"off" }}).then(function(resp){
       yu.g=resp.data;
+       yu.condition=resp.data.condition
 
     }).catch(function(err){
       yu.g=err.response;
