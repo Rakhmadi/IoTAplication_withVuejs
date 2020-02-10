@@ -93,7 +93,7 @@ background: rgba(58,28,113,1) ;
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">Relay</v-list-item-title>
-        <v-list-item-subtitle>Status Relay Condition <h2>{{condition}}</h2> </v-list-item-subtitle>
+        <v-list-item-subtitle>Status Relay Condition <h2 v-if="rely === 1">OFF</h2><h2 v-if="rely === 0">ON</h2> </v-list-item-subtitle>
       </v-list-item-content>
 
 
@@ -139,7 +139,9 @@ import axios from 'axios';
          kelembapan:'0',
           temperatur:'0',
           signalstr:null,
-          condition:''
+          condition:'',
+          noe:'',
+          rely:''
 
       }
     },
@@ -154,6 +156,18 @@ import axios from 'axios';
 
     }).catch(function(err){
       yu.dats=err.response;
+    })
+   }, 500);
+      setInterval(() => {
+      const yu =this;
+    axios.get("http://192.168.43.100/").then(function(resp){
+     yu.noe=resp.data
+     yu.rely=resp.data.rely
+
+
+    }).catch(function(err){
+      yu.noe=err.response;
+      console.log(err.response);
     })
    }, 500);
     },
