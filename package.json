@@ -24,6 +24,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
+    "vue-ip": "^2.0.1",
     "vuetify": "^2.1.0"
   },
   "devDependencies": {
