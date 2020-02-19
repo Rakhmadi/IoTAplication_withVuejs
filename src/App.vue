@@ -7,15 +7,6 @@
       <v-list dense>
         <v-list-item link>
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-           
           </v-list-item-action>
           <v-list-item-content  v-on:click="dialog = !dialog">
             <v-list-item-title> Ip Setting</v-list-item-title>
@@ -23,32 +14,25 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
     <v-app-bar
       app
       color="white"
-      
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>IoT Dinamika</v-toolbar-title>
     </v-app-bar>
     <v-content>
       <v-container
-        
         fluid
       >
-      
-
        <v-card
     class="mx-auto"
     style="
        margin-bottom:10px;
         background: rgb(58,28,113);
           background: linear-gradient(137deg, rgba(58,28,113,1) 0%, rgba(215,109,119,1) 100%);
- 
     "
      dark
-   
   >
     <v-list-item three-line>
       <v-list-item-content>
@@ -56,7 +40,7 @@
       
         <v-list-item>
         <v-list-item-icon>
-        <v-icon>mdi-water</v-icon>
+        <v-icon>mdi-water-percent</v-icon>
       </v-list-item-icon>
       <v-list-item-subtitle>Humidity   <h3>{{kelembapan}}</h3> </v-list-item-subtitle>
     </v-list-item>
@@ -65,16 +49,16 @@
       <v-list-item-icon>
         <v-icon>mdi-thermometer</v-icon>
       </v-list-item-icon>
-      <v-list-item-subtitle>Temprature <h3>{{temperatur}}</h3></v-list-item-subtitle>
+      <v-list-item-subtitle>Temprature <h3>{{temperatur}} &#8451;</h3></v-list-item-subtitle>
     </v-list-item>
      <v-list-item>
       <v-list-item-icon>
         <v-icon>mdi-wifi</v-icon>
       </v-list-item-icon>
-      <v-list-item-subtitle>RSSI <h3>{{signalstr}} dbm</h3></v-list-item-subtitle>
+      <v-list-item-subtitle>RSSI <h3>{{signalstr}} dBm</h3></v-list-item-subtitle>
     </v-list-item>
       </v-list-item-content>
-
+   <v-btn   @click.native='refresh()' large icon color="white" >  <v-icon> mdi mdi-refresh</v-icon> </v-btn>
     
     </v-list-item>
 
@@ -89,7 +73,6 @@
      background: rgb(58,28,113);
 background: rgba(58,28,113,1) ;
     "
-    
    dark
   >
     <v-list-item three-line>
@@ -98,7 +81,6 @@ background: rgba(58,28,113,1) ;
         <v-list-item-title class="headline mb-1">Relay</v-list-item-title>
         <v-list-item-subtitle>Status Relay Condition <h2 v-if="rely === 1">OFF</h2><h2 v-if="rely === 0">ON</h2> </v-list-item-subtitle>
       </v-list-item-content>
-
 
     </v-list-item>
 
@@ -135,11 +117,12 @@ background: rgba(58,28,113,1) ;
         <v-card-text>  <v-text-field label="IP" :placeholder="ips" v-model="ip" hide-details="auto"></v-text-field></v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn  text @click="dialog = false">close</v-btn>
+          <v-btn  text @click="dialog = false , refresh()">close</v-btn>
           <v-btn text @click="save()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+   
 
   </v-app>
   
@@ -152,39 +135,52 @@ import axios from 'axios';
     props: {
       source: String,
     },
-    
-    data(){
-      return{
+    data: ()=>({
         dats:{
-        },
-         drawer: null,
-         g:'off',
-         kelembapan:'0',
-          temperatur:'0',
-          signalstr:null,
-          condition:'',
-          noe:'',
-          rely:'',
-          pending:false,
-             ip: '', // or null
-            port: '8888', // or null
-            ips:null,
-            dialog: false
+          },
+        drawer: null,
+        g:'off',
+        kelembapan:'0',
+        temperatur:'0',
+        signalstr:null,
+        condition:'',
+        noe:'',
+        rely:'',
+        pending:false,
+        ip: '', // or null
+        port: '8888', // or null
+        ips:null,
+        dialog: false,
+        stu:'',
+        intervallrsgt:true,
 
-      }
-    },
+    }),
     mounted() {
-      
       setInterval(() => {
         var url =localStorage.getItem('ip_device');
       const yu =this;
       yu.ips=localStorage.getItem('ip_device');
-     
-    axios.get(`http://${url}/dht`).then(function(resp){
+      axios.get(`http://${url}/`).then((resp)=>{
+        yu.stu=resp.data;
+        yu.intervallrsgt=true
+      }).catch((err)=>{
+         console.log(err.message)
+         if (err.message == "Network Error") {
+           yu.intervallrsgt=false
+         } 
+         
+      });
+      },2000);
+      setInterval(() => {
+        var url =localStorage.getItem('ip_device');
+      const yu =this;
+      yu.ips=localStorage.getItem('ip_device');
+     axios.get(`http://${url}/dht`).then(function(resp){
       yu.dats=resp.data;
       yu.kelembapan=resp.data.kelembapan
       yu.temperatur=resp.data.temperatur
       yu.signalstr=resp.data.signalstr
+      yu.stu=resp.response
     }).catch(error => console.log(error)).finally(function () { yu.pending = true })
    }, 1000);
       setInterval(() => {
@@ -200,6 +196,9 @@ import axios from 'axios';
    }, 1000);
     },
     methods: {
+        refresh(){
+           window.location.reload(true);
+        },
         save(){
           var t = this;
            localStorage.setItem('ip_device',t.ip );
@@ -227,9 +226,7 @@ import axios from 'axios';
     }).catch(function(err){
       yu.g=err.response;
     })
-    },
-   
+    },  
     },
   }
-
 </script>
