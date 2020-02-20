@@ -78,8 +78,12 @@ background: rgba(58,28,113,1) ;
     <v-list-item three-line>
       <v-list-item-content>
          
-        <v-list-item-title class="headline mb-1">Relay</v-list-item-title>
-        <v-list-item-subtitle>Status Relay Condition <h2 v-if="rely === 1">OFF</h2><h2 v-if="rely === 0">ON</h2> </v-list-item-subtitle>
+        <v-list-item-title class="headline mb-1">{{nrelay1}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely === 1">OFF</h2><h2 v-if="rely === 0">ON</h2> </v-list-item-subtitle>
+     <!--- <v-switch
+       v-model="modl"
+       @change="op()"
+    ></v-switch>-->
       </v-list-item-content>
 
     </v-list-item>
@@ -89,6 +93,82 @@ background: rgba(58,28,113,1) ;
       <v-btn @click.native='off()' text>Off</v-btn>
     </v-card-actions>
   </v-card>
+  
+
+   <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+         
+        <v-list-item-title class="headline mb-1">{{nrelay2}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely1 === 1">OFF</h2><h2 v-if="rely1 === 0">ON</h2> </v-list-item-subtitle>
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on1()' text>On</v-btn>
+      <v-btn @click.native='off1()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
+
+
+   <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+         
+        <v-list-item-title class="headline mb-1">{{nrelay3}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely2 === 1">OFF</h2><h2 v-if="rely2 === 0">ON</h2> </v-list-item-subtitle>
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on2()' text>On</v-btn>
+      <v-btn @click.native='off2()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
+
+   <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+         
+        <v-list-item-title class="headline mb-1">{{nrelay4}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely3 === 1">OFF</h2><h2 v-if="rely3 === 0">ON</h2> </v-list-item-subtitle>
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on3()' text>On</v-btn>
+      <v-btn @click.native='off3()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
+
+
 
         <v-row
           align="center"
@@ -122,6 +202,7 @@ background: rgba(58,28,113,1) ;
         </v-card-actions>
       </v-card>
     </v-dialog>
+    
    
 
   </v-app>
@@ -146,6 +227,9 @@ import axios from 'axios';
         condition:'',
         noe:'',
         rely:'',
+        rely1:'',
+        rely2:'',
+        rely3:'',
         pending:false,
         ip: '', // or null
         port: '8888', // or null
@@ -153,7 +237,11 @@ import axios from 'axios';
         dialog: false,
         stu:'',
         intervallrsgt:true,
-
+        nrelay1:'Relay 1',
+        nrelay2:'Relay 2',
+        nrelay3:'Relay 3',
+        nrelay4:'Relay 4',
+        modl:'',
     }),
     mounted() {
       setInterval(() => {
@@ -188,14 +276,27 @@ import axios from 'axios';
       var url =localStorage.getItem('ip_device');
     axios.get(`http://${url}/`).then(function(resp){
      yu.noe=resp.data
-     yu.rely=resp.data.rely
+     yu.rely=resp.data.relay1
+     yu.rely1=resp.data.relay2
+     yu.rely2=resp.data.relay3
+     yu.rely3=resp.data.relay4
     }).catch(function(err){
       yu.noe=err.response;
       console.log(err.response);
     })
-   }, 1000);
+   }, 800);
     },
     methods: {
+
+      op(){
+        var ep =this;
+        if (ep.modl === true) {
+          ep.on();
+        }else{
+          ep.off();
+        }
+      },
+
         refresh(){
            window.location.reload(true);
         },
@@ -204,12 +305,14 @@ import axios from 'axios';
            localStorage.setItem('ip_device',t.ip );
            console.log(t.ip)
         },
+        /////////
        on(){
          const yu =this;
          var url =localStorage.getItem('ip_device');
       axios.get(`http://${url}/relay`,{ params: { condition:"on" }}).then(function(resp){
       yu.g=resp.data;
       yu.condition=resp.data.condition
+      
 
     }).catch(function(err){
       yu.g=err.response;
@@ -227,6 +330,84 @@ import axios from 'axios';
       yu.g=err.response;
     })
     },  
+    //////////////////
+      on1(){
+         const yu =this;
+         var url =localStorage.getItem('ip_device');
+      axios.get(`http://${url}/relay1`,{ params: { condition:"on" }}).then(function(resp){
+      yu.g=resp.data;
+      yu.condition=resp.data.condition
+      
+
+    }).catch(function(err){
+      yu.g=err.response;
+      
+    })
+    },
+    off1(){
+         const yu =this;
+         var url =localStorage.getItem('ip_device');
+      axios.get(`http://${url}/relay1`,{ params: { condition:"off" }}).then(function(resp){
+      yu.g=resp.data;
+       yu.condition=resp.data.condition
+
+    }).catch(function(err){
+      yu.g=err.response;
+    })
+    }, 
+    ////////////////////
+      on2(){
+         const yu =this;
+         var url =localStorage.getItem('ip_device');
+      axios.get(`http://${url}/relay2`,{ params: { condition:"on" }}).then(function(resp){
+      yu.g=resp.data;
+      yu.condition=resp.data.condition
+      
+
+    }).catch(function(err){
+      yu.g=err.response;
+      
+    })
+    },
+    off2(){
+         const yu =this;
+         var url =localStorage.getItem('ip_device');
+      axios.get(`http://${url}/relay2`,{ params: { condition:"off" }}).then(function(resp){
+      yu.g=resp.data;
+       yu.condition=resp.data.condition
+
+    }).catch(function(err){
+      yu.g=err.response;
+    })
+    },  
+    //////////////////// 
+      on3(){
+         const yu =this;
+         var url =localStorage.getItem('ip_device');
+      axios.get(`http://${url}/relay3`,{ params: { condition:"on" }}).then(function(resp){
+      yu.g=resp.data;
+      yu.condition=resp.data.condition
+      
+
+    }).catch(function(err){
+      yu.g=err.response;
+      
+    })
+    },
+    off3(){
+         const yu =this;
+         var url =localStorage.getItem('ip_device');
+      axios.get(`http://${url}/relay3`,{ params: { condition:"off" }}).then(function(resp){
+      yu.g=resp.data;
+       yu.condition=resp.data.condition
+
+    }).catch(function(err){
+      yu.g=err.response;
+    })
+    },  
+    },
+    watch: {
+      
     },
   }
 </script>
