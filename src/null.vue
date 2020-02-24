@@ -66,70 +66,109 @@
     </v-card-actions>
   </v-card>
 
- 
-  <v-card dark class="mx-auto" style="  margin-bottom:10px; background: rgb(58,28,113);
-background: rgba(58,28,113,1) ;">
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl" @change="op()" value="" color="rgba(215,109,119,1)" label="Relay"></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
+  <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
          
-        </template>
-      </v-row>
+        <v-list-item-title class="headline mb-1">{{nrelay1}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely === 1">OFF</h2><h2 v-if="rely === 0">ON</h2> </v-list-item-subtitle>
+     <!--- <v-switch
+       v-model="modl"
+       @change="op()"
+    ></v-switch>-->
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on()' text>On</v-btn>
+      <v-btn @click.native='off()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
   
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl1" @change="op1()" value="" color="rgba(215,109,119,1)" label="Relay"></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
+
+   <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
          
-        </template>
-      </v-row>
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl2" @change="op2()" value="" color="rgba(215,109,119,1)" label="Relay"></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
-         
-        </template>
-      </v-row>
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl3" @change="op3()" value="" color="rgba(215,109,119,1)" label="Relay" ></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
-         
-        </template>
-      </v-row>
-         </v-card>
+        <v-list-item-title class="headline mb-1">{{nrelay2}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely1 === 1">OFF</h2><h2 v-if="rely1 === 0">ON</h2> </v-list-item-subtitle>
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on1()' text>On</v-btn>
+      <v-btn @click.native='off1()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
 
 
- 
+   <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+         
+        <v-list-item-title class="headline mb-1">{{nrelay3}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely2 === 1">OFF</h2><h2 v-if="rely2 === 0">ON</h2> </v-list-item-subtitle>
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on2()' text>On</v-btn>
+      <v-btn @click.native='off2()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
+
+   <v-card
+    class="mx-auto"
+    style="
+     margin-bottom:10px;
+     background: rgb(58,28,113);
+background: rgba(58,28,113,1) ;
+    "
+   dark
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+         
+        <v-list-item-title class="headline mb-1">{{nrelay4}}</v-list-item-title>
+        <v-list-item-subtitle>Status Relay  <h2 v-if="rely3 === 1">OFF</h2><h2 v-if="rely3 === 0">ON</h2> </v-list-item-subtitle>
+      </v-list-item-content>
+
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn @click.native='on3()' text>On</v-btn>
+      <v-btn @click.native='off3()' text>Off</v-btn>
+    </v-card-actions>
+  </v-card>
+
+
 
         <v-row
           align="center"
@@ -203,56 +242,8 @@ import axios from 'axios';
         nrelay3:'Relay 3',
         nrelay4:'Relay 4',
         modl:'',
-         modl1:'',
-          modl2:'',
-           modl3:'',
     }),
     mounted() {
-      //////////////////
-         const yu =this;
-      var url =localStorage.getItem('ip_device');
-    axios.get(`http://${url}/`).then(function(resp){
-     yu.noe=resp.data
-     yu.rely=resp.data.relay1
-     yu.rely1=resp.data.relay2
-     yu.rely2=resp.data.relay3
-     yu.rely3=resp.data.relay4
-
-     //
-     if (yu.rely === 1) {
-       yu.modl=false;
-
-     } else {
-        yu.modl=true;
-     }
-     //
-     if (yu.rely1 === 1) {
-       yu.modl1=false;
-
-     } else {
-        yu.modl1=true;
-     }
-     //
-     if (yu.rely2 === 1) {
-       yu.modl2=false;
-
-     } else {
-        yu.modl2=true;
-     }
-     //
-     if (yu.rely3 === 1) {
-       yu.modl3=false;
-
-     } else {
-        yu.modl3=true;
-     }
-
-
-    }).catch(function(err){
-      yu.noe=err.response;
-      console.log(err.response);
-    });
-    //////
       setInterval(() => {
         var url =localStorage.getItem('ip_device');
       const yu =this;
@@ -280,8 +271,20 @@ import axios from 'axios';
       yu.stu=resp.response
     }).catch(error => console.log(error)).finally(function () { yu.pending = true })
    }, 1000);
-     
-   
+      setInterval(() => {
+      const yu =this;
+      var url =localStorage.getItem('ip_device');
+    axios.get(`http://${url}/`).then(function(resp){
+     yu.noe=resp.data
+     yu.rely=resp.data.relay1
+     yu.rely1=resp.data.relay2
+     yu.rely2=resp.data.relay3
+     yu.rely3=resp.data.relay4
+    }).catch(function(err){
+      yu.noe=err.response;
+      console.log(err.response);
+    })
+   }, 800);
     },
     methods: {
 
@@ -291,30 +294,6 @@ import axios from 'axios';
           ep.on();
         }else{
           ep.off();
-        }
-      },
-       op1(){
-        var ep =this;
-        if (ep.modl1 === true) {
-          ep.on1();
-        }else{
-          ep.off1();
-        }
-      },
-      op2(){
-        var ep =this;
-        if (ep.modl2 === true) {
-          ep.on2();
-        }else{
-          ep.off2();
-        }
-      },
-       op3(){
-        var ep =this;
-        if (ep.modl3 === true) {
-          ep.on3();
-        }else{
-          ep.off3();
         }
       },
 
@@ -428,6 +407,7 @@ import axios from 'axios';
     },  
     },
     watch: {
+      
     },
   }
 </script>
