@@ -69,67 +69,55 @@
  
   <v-card dark class="mx-auto" style="  margin-bottom:10px; background: rgb(58,28,113);
 background: rgba(58,28,113,1) ;">
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl" @change="op()" value="" color="rgba(215,109,119,1)" label="Relay"></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
-         
-        </template>
-      </v-row>
-  
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl1" @change="op1()" value="" color="rgba(215,109,119,1)" label="Relay"></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
-         
-        </template>
-      </v-row>
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl2" @change="op2()" value="" color="rgba(215,109,119,1)" label="Relay"></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
-         
-        </template>
-      </v-row>
-      <v-row no-gutters>
-        <template>
-          <v-col style="padding-left:5px;padding-right:5px;">
-            <div>
-            
-           <v-col style="margin-left:5px;margin-right:5px;">
-              <v-switch  v-model="modl3" @change="op3()" value="" color="rgba(215,109,119,1)" label="Relay" ></v-switch>
-           </v-col>
-            
-            </div>
-          </v-col>
-         
-        </template>
-      </v-row>
+  <v-list-item three-line>
+      <v-list-item-content>
+
+      
+        <v-list-item>
+        <v-switch  v-model="modl" @change="op()" value="" color="rgba(215,109,119,1)" ></v-switch>
+        
+      <v-list-item-subtitle style="margin-left:10px;">Relay</v-list-item-subtitle>
+    </v-list-item>
+     </v-list-item-content>
+     </v-list-item>
+
+      <v-list-item three-line>
+      <v-list-item-content>
+
+      
+        <v-list-item>
+        <v-switch  v-model="modl1" @change="op1()" value="" color="rgba(215,109,119,1)" ></v-switch>
+        
+      <v-list-item-subtitle style="margin-left:10px;">Relay</v-list-item-subtitle>
+    </v-list-item>
+     </v-list-item-content>
+     </v-list-item>
+
+      <v-list-item three-line>
+      <v-list-item-content>
+
+      
+        <v-list-item>
+        <v-switch  v-model="modl2" @change="op2()" value="" color="rgba(215,109,119,1)" ></v-switch>
+        
+      <v-list-item-subtitle style="margin-left:10px;">Relay</v-list-item-subtitle>
+    </v-list-item>
+     </v-list-item-content>
+     </v-list-item>
+
+      <v-list-item three-line>
+      <v-list-item-content>
+
+      
+        <v-list-item>
+          
+        <v-switch  v-model="modl3" @change="op3()" value="" color="rgba(215,109,119,1)" ></v-switch>
+        
+      <v-list-item-subtitle style="margin-left:10px;">Relay</v-list-item-subtitle>
+    </v-list-item>
+     </v-list-item-content>
+     </v-list-item>      
          </v-card>
-
-
- 
 
         <v-row
           align="center"
